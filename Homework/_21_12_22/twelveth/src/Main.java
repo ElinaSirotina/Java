@@ -1,10 +1,17 @@
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println(ex12("Hello my name is"));
-        System.out.println(reverse("Hello my name is"));
+        try {
+            String str = FReader.readFile("text.txt", StandardCharsets.UTF_8);
+            System.out.println(ex12(str));
+            System.out.println(reverse(str));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public static String reverse(String string) {

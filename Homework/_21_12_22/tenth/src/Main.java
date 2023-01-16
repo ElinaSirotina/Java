@@ -1,7 +1,14 @@
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+
 public class Main {
     public static void main(String[] args) {
-        String ss1 = "KikJhYggfTgf";
-        System.out.println(myIndexOf(ss1, 'i'));
+        try {
+            String ss1 = FReader.readFile("text.txt", StandardCharsets.UTF_8);
+            System.out.println(myIndexOf(ss1, 'i'));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public static int myIndexOf(String str, char ch) {
