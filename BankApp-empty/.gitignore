@@ -9,6 +9,7 @@ application-local.yaml
 application-stage.yaml
 logback-spring.xml
 lombok.config
+/out
 ### STS ###
 .apt_generated
 .classpath
