@@ -17,8 +17,9 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
+    @ManyToOne(cascade = CascadeType.ALL)
     @Column(name="manager_id")
     private int managerId;
 
@@ -37,13 +38,25 @@ public class Product {
     @Column(name="sum")
     private double sum;
 
-    @Column(name="limit")
-    private int limit;
+    @Column(name="lim")
+    private int lim;
 
-    @Column(name="createdAt")
+    @Column(name="created_at")
     private Date createdAt;
 
-    @Column(name="updatedAt")
+    @Column(name="updated_at")
     private Date updatedAt;
 
+    public Product(int managerId, String name, int status, int currencyCode, double interestRate, double sum, int lim, Date createdAt, Date updatedAt) {
+        this.managerId = managerId;
+        this.name = name;
+        this.status = status;
+        this.currencyCode = currencyCode;
+        this.interestRate = interestRate;
+        this.sum = sum;
+        this.lim = lim;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 }
+

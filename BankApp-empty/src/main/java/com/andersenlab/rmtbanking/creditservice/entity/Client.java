@@ -17,18 +17,20 @@ public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //оптимальная стратегия генерацияя id
-    private Long id;
+    private int id;
 
-    @Column(name="managerId")
-    private Long managerId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "manager_id")
+    @Column(name="manager_id")
+    private int managerId;
 
     @Column(name="status")
     private int status;
 
-    @Column(name="firstName")
+    @Column(name="first_name")
     private String firstName;
 
-    @Column(name="lastName")
+    @Column(name="last_name")
     private String lastName;
 
     @Column(name="email")
@@ -40,10 +42,21 @@ public class Client {
     @Column(name="phone")
     private String phone;
 
-    @Column(name="createdAt")
+    @Column(name="created_at")
     private Date createdAt;
 
-    @Column(name="updatedAt")
+    @Column(name="updated_at")
     private Date updatedAt;
 
+    public Client(int managerId, int status, String firstName, String lastName, String email, String address, String phone, Date createdAt, Date updatedAt) {
+        this.managerId = managerId;
+        this.status = status;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.address = address;
+        this.phone = phone;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 }

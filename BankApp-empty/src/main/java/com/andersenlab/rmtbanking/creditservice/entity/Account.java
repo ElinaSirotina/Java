@@ -17,10 +17,11 @@ public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //оптимальная стратегия генерацияя id
-    private Long id;
+    private int id;
 
-    @Column(name="clientId")
-    private Long clientId;
+    @ManyToOne(targetEntity = Client.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "client_id", nullable = false)
+    private int clientId;
 
     @Column(name="type")
     private int type;
@@ -34,10 +35,19 @@ public class Account {
     @Column(name="currency_code")
     private int currencyCode;
 
-    @Column(name="createdAt")
+    @Column(name="created_at")
     private Date createdAt;
 
-    @Column(name="updatedAt")
+    @Column(name="updated_at")
     private Date updatedAt;
 
+    public Account(int clientId, int type, int status, double balance, int currencyCode, Date createdAt, Date updatedAt) {
+        this.clientId = clientId;
+        this.type = type;
+        this.status = status;
+        this.balance = balance;
+        this.currencyCode = currencyCode;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 }

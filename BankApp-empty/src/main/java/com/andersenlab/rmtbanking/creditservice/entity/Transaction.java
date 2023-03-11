@@ -17,36 +17,35 @@ public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
-    @Column(name="debit_account_id")
-    private Long debitAccountId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @Column(name="debet_account_id")
+    private int debitAccountId;
 
-    @Column(name="cebit_account_id")
-    private Long creditAccountId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @Column(name="credit_account_id")
+    private int creditAccountId;
 
     @Column(name="type")
     private String type;
 
-    @Column(name="amount")
+    @Column(name="ammount")
     private double amount;
 
     @Column(name="description")
     private String desctiption;
 
-    @Column(name="interest_rate")
-    private double interestRate;
-
-    @Column(name="sum")
-    private double sum;
-
-    @Column(name="limit")
-    private int limit;
-
-    @Column(name="createdAt")
+    @Column(name="created_at")
     private Date createdAt;
 
-    @Column(name="updatedAt")
-    private Date updatedAt;
+    public Transaction(int debitAccountId, int creditAccountId, String type, double amount, String desctiption, Date createdAt) {
+        this.debitAccountId = debitAccountId;
+        this.creditAccountId = creditAccountId;
+        this.type = type;
+        this.amount = amount;
+        this.desctiption = desctiption;
+        this.createdAt = createdAt;
+    }
 
 }
