@@ -19,13 +19,15 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @Column(name="debet_account_id")
-    private int debitAccountId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @Column(name="credit_account_id")
-    private int creditAccountId;
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "debit_account_id", referencedColumnName = "id")
+    private Account debitAccount;
+
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "credit_account_id", referencedColumnName = "id")
+    private Account creditAccount;
+
 
     @Column(name="type")
     private String type;
@@ -39,13 +41,6 @@ public class Transaction {
     @Column(name="created_at")
     private Date createdAt;
 
-    public Transaction(int debitAccountId, int creditAccountId, String type, double amount, String desctiption, Date createdAt) {
-        this.debitAccountId = debitAccountId;
-        this.creditAccountId = creditAccountId;
-        this.type = type;
-        this.amount = amount;
-        this.desctiption = desctiption;
-        this.createdAt = createdAt;
-    }
+
 
 }

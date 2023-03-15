@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -19,9 +20,12 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @Column(name="manager_id")
-    private int managerId;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "manager_id", referencedColumnName = "id")
+    private Manager manager;
+
+    @OneToMany(mappedBy = "product", cascade =  CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Agreement> agreements;
 
     @Column(name="name")
     private String name;
@@ -47,16 +51,6 @@ public class Product {
     @Column(name="updated_at")
     private Date updatedAt;
 
-    public Product(int managerId, String name, int status, int currencyCode, double interestRate, double sum, int lim, Date createdAt, Date updatedAt) {
-        this.managerId = managerId;
-        this.name = name;
-        this.status = status;
-        this.currencyCode = currencyCode;
-        this.interestRate = interestRate;
-        this.sum = sum;
-        this.lim = lim;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
+
 }
 

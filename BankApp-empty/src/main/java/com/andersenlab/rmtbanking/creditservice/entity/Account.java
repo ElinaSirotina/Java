@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -19,10 +21,17 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY) //оптимальная стратегия генерацияя id
     private int id;
 
-    @ManyToOne(targetEntity = Client.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "client_id", nullable = false)
-    private int clientId;
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id", referencedColumnName = "id")
+    private Client client;
 
+    @OneToMany(mappedBy = "debitAccount", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Transaction> debitTransactions;
+    @OneToMany(mappedBy = "creditAccount", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Transaction> creditTransactions;
+
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Agreement> agreements;
     @Column(name="type")
     private int type;
 
@@ -41,13 +50,5 @@ public class Account {
     @Column(name="updated_at")
     private Date updatedAt;
 
-    public Account(int clientId, int type, int status, double balance, int currencyCode, Date createdAt, Date updatedAt) {
-        this.clientId = clientId;
-        this.type = type;
-        this.status = status;
-        this.balance = balance;
-        this.currencyCode = currencyCode;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
+
 }

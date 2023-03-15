@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -19,10 +20,12 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY) //оптимальная стратегия генерацияя id
     private int id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "manager_id")
-    @Column(name="manager_id")
-    private int managerId;
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Account> accounts;
+
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "manager_id", referencedColumnName = "id")
+    private Manager manager;
 
     @Column(name="status")
     private int status;
@@ -48,15 +51,5 @@ public class Client {
     @Column(name="updated_at")
     private Date updatedAt;
 
-    public Client(int managerId, int status, String firstName, String lastName, String email, String address, String phone, Date createdAt, Date updatedAt) {
-        this.managerId = managerId;
-        this.status = status;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.address = address;
-        this.phone = phone;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
+
 }

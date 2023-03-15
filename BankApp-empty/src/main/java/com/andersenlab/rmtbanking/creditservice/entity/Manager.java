@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -25,6 +26,12 @@ public class Manager {
     @Column(name="last_name")
     private String lastName;
 
+    @OneToMany(mappedBy = "manager", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Client> clients;
+
+    @OneToMany(mappedBy = "manager", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Product> products;
+
     @Column(name="status")
     int status;
 
@@ -34,11 +41,5 @@ public class Manager {
     @Column(name="updated_at")
     private Date updatedAt;
 
-    public Manager(String firstName, String lastName, int status, Date createdAt, Date updatedAt) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.status = status;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
+
 }
